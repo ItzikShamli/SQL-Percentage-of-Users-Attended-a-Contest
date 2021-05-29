@@ -1,0 +1,14 @@
+SELECT
+    tusers.contest_id,
+    ROUND(tusers.countu / (SELECT COUNT(*) FROM users) * 100, 2) AS percentage
+FROM
+(SELECT 
+    contest_id,
+    COUNT(distinct user_id) AS countu
+FROM
+    register
+GROUP BY
+    contest_id) AS tusers
+ORDER BY
+    percentage DESC,
+    tusers.contest_id
